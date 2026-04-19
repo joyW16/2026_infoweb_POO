@@ -143,11 +143,13 @@ class UI:
             if op == 4: UI.conta()
             if op == 5: UI.ingresso()
     @staticmethod
+
     def menu():
         print("1-Triângulo 2-Círculo 3-Viagem 4-Conta Bancária, 5-Ingresso, 9-Fim")
         op = int(input("Escolha uma opção: "))
         return op
     @staticmethod
+
     def triangulo():
         print("Cálculo da área de um triângulo")
         x = Triangulo()
@@ -156,20 +158,44 @@ class UI:
         area = x.calc_area()
         print(f"Um triângulo com base {x.get_base()} e altura {x.get_altura()} tem área = {area}")
     @staticmethod
+
     def circulo():
         print("Calculo da área de um circulo")
         x = Circulo()
-        
-        print("")
+        x.set_raio(float(input("Raio: ")))
+        print("Área:", x.calc_area())
+        print("Circuferêcia:", x.calc_circuferencia())
+
     @staticmethod
     def viagem():
-        print(float(input("Informe")))
+        v = Viagem()
+        v.set_distancia(float(input("Distância(km):" )))
+        h = int(input("Horas: "))
+        m = int(input("Minutos: "))
+        v.set_tempo(h, m)
+        print("Velocidade média:", v.calc_velocidade(), "km/h")
+
     @staticmethod
     def conta():
-        pass
+        c = ContaBancaria()
+        c.set_titular(input("Titular: "))
+        c.set_numero(int(input("Número: ")))
+        c.set_saldo(float(input("Saldo inicial: ")))
+        op = int(input("1-Depositar 2-Sacar: "))
+        valor = float(input("Valor: "))
+        if op == 1:
+            c.depositar(valor)
+        else:
+            c.sacar(valor)
+        print("Saldo final:", c.get_saldo())
+
     @staticmethod
     def ingresso():
-      pass
+      e = EntradaCinema()
+      e.set_dia(input("Dia: "))
+      e.set_hora(int(input("Hora: ")))
+      print("Inteira:", e.calc_valor())
+      print("Meia:", e.calc_meia())
     
 UI.main()
-
+ 
