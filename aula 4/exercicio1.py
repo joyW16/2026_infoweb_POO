@@ -127,3 +127,49 @@ class EntradaCinema:
             valor *= 1.5
 
         return valor
+    def calc_meia(self):
+        return self.calc_valor() / 2
+    
+#interfarce do usuário
+class UI:
+    @staticmethod
+    def main():
+        op = 0
+        while op != 9:
+            op = UI.menu()
+            if op == 1: UI.triangulo()
+            if op == 2: UI.circulo()
+            if op == 3: UI.viagem()
+            if op == 4: UI.conta()
+            if op == 5: UI.ingresso()
+    @staticmethod
+    def menu():
+        print("1-Triângulo 2-Círculo 3-Viagem 4-Conta Bancária, 5-Ingresso, 9-Fim")
+        op = int(input("Escolha uma opção: "))
+        return op
+    @staticmethod
+    def triangulo():
+        print("Cálculo da área de um triângulo")
+        x = Triangulo()
+        x.set_base(float(input("Informe o valor da base: ")))
+        x.set_altura(float(input("Informe o valor da altura: ")))
+        area = x.calc_area()
+        print(f"Um triângulo com base {x.get_base()} e altura {x.get_altura()} tem área = {area}")
+    @staticmethod
+    def circulo():
+        print("Calculo da área de um circulo")
+        x = Circulo()
+        
+        print("")
+    @staticmethod
+    def viagem():
+        print(float(input("Informe")))
+    @staticmethod
+    def conta():
+        pass
+    @staticmethod
+    def ingresso():
+      pass
+    
+UI.main()
+
