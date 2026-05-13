@@ -88,7 +88,7 @@ class PlaylistItem:
     
 
 class UI:
-    playlist = []
+    playlists = []
     musicas = []
     itens = []
 
@@ -97,8 +97,9 @@ class UI:
         op = 0
         while op != 13:
             op = UI.menu()
+
             if op == 1: UI.inserir_playlist()
-            if op == 2: UI.listar_playlist()
+            if op == 2: UI.listar_playlists()
             if op == 3: UI.atualizar_playlist()
             if op == 4: UI.excluir_playlist()
             if op == 5: UI.inserir_musica()
@@ -118,4 +119,73 @@ class UI:
     @staticmethod
     def inserir_playlist():
         id = int(input("ID: "))
-        nome
+        nome = input("Nome: ")
+        descricao = input("Descrição: ")
+        UI.playlists.append(Playlist(id, nome, descricao))
+
+    @staticmethod
+    def listar_playlists():
+        for p in UI.playlists:
+            print(p)
+
+    @staticmethod
+    def atualizar_playlist():
+        id = int(input("ID: "))
+        for p in UI.playlists:
+            if p.get_id() == id:
+                p.set_nome(input("Nome novo da playlist: "))
+                p.set_descricao(input("Nova descrição da playlist: "))
+
+    @staticmethod
+    def excluir_playlist():
+        id = int(input("ID: "))
+        for p in UI.playlists:
+            if p.get_id() == id:
+                UI.playlists.remove(p)
+
+    @staticmethod
+    def inserir_musica():
+        id = int(input("ID: "))
+        titulo = input("Titulo: ")
+        artista = input("Artista: ")
+        album = input("Album: ")
+        UI.musicas.append(Musica(id, titulo, artista, album))
+
+    @staticmethod
+    def listar_musicas():
+        for m in UI.musicas:
+            print(m)
+    
+    @staticmethod
+    def atualizar_musica():
+        id = int(input("ID: "))
+        for m in UI.musicas:
+            if m.get_id() == id:
+                m.set_titulo(input("Novo título: "))
+                m.set_artista(input("Novo artista: "))
+                m.set_album(input("Novo album: "))
+
+    @staticmethod
+    def excluir_musica():
+        id = int(input("ID: "))
+        for m in UI.musicas:
+            if m.get_id() == id:
+                UI.musicas.remove(m)
+
+    @staticmethod
+    def inserir_item():
+        id = int(input("ID: "))
+        id_playlist = int(input("ID do Playlist: "))
+        id_musica = int(input("ID da Música: "))
+        sequencia = int(input("Ordem: "))
+        UI.itens.appen(PlaylistItem(id, id_playlist, id_musica, sequencia))
+
+    @staticmethod
+    def listar_itens():
+        for i in UI.itens:
+            print(i)
+
+    @staticmethod
+    def listar_musicas_playlist():
+        id_playlist = int(input("ID da Playlist: "))
+        for i in s
