@@ -1,3 +1,4 @@
+import json
 class Cliente:
     def __init__(self, id, nome):
         self.id = id
@@ -10,19 +11,36 @@ class Cliente:
     def from_json(dic):
         return Cliente(dic["id"], dic["nome"])
     
+
 a = Cliente(1, "Douglas Crockford")
 b = Cliente(2, "Jon Bosak")
+def salvar():
+    a = Cliente(1, "Douglas Crockford") # chamado o __init__
+    b = Cliente(2, "Jon Bosak")
+    c = Cliente.from_json({ "id" : 3, "nome" : "Alan Turing"}) # chamado o from_json
+    lista = [a, b, c]
+    arquivo = open("clientes.json", mode = "w")
+    json.dump(lista, arquivo, default = Cliente.to_json, indent = 2)
+    arquivo.close()
 
-a = Cliente(1, "Douglas Crockford") # chamado o __init__
-b = Cliente(2, "Jon Bosak")
-c = Cliente.from_json({ "id" : 3, "nome" : "Alan Turing"}) # chamado o from_json
+    print(a)
+    print(b)
+    print(c)
+    print(a.__dict__)
+    print(b.__dict__)
+    print(vars(a))
+    print(vars(b))
+    print(a.to_json())
+    print(b.to_json())
 
-print(a)
-print(b)
-print(c)
-print(a.__dict__)
-print(b.__dict__)
-print(vars(a))
-print(vars(b))
-print(a.to_json())
-print(b.to_json())
+def abrir():
+    arquivo = open("clientes.json", mode = "r")
+    list_dic = json.load(arquivo)
+    arquivo.close()
+    for dic in list_dic:
+        x = Cliente.from_json(dic)
+        lista.append(x)
+        print(x)
+
+#salvar()
+abrir()
