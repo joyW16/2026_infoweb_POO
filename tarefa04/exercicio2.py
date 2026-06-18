@@ -188,4 +188,4 @@ class UI:
     @staticmethod
     def listar_musicas_playlist():
         id_playlist = int(input("ID da Playlist: "))
-        for i in s
+        
