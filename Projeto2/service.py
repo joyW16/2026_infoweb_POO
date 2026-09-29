@@ -8,6 +8,7 @@ from models.atendimento import Atendimento
 from models.atendimentodao import AtendimentoDAO
 from models.endereco import Endereco
 from models.enderecodao import EnderecoDAO
+from datetime import datetime, timedelta
 
 class Service:
     @staticmethod
@@ -82,6 +83,19 @@ class Service:
     def horario_excluir(id):
         HorarioDAO().excluir(id) 
 
+    @staticmethod
+    def horario_abrir_agenda(data, hora_inicio, hora_fim, intervalo, id_profissional):
+            data_inicio = datetime.strptime(data + " " + hora_inicio, "%d/%m/%Y : %h:%M")
+            data_fim = datetime.strptime(data + " " + hora_fim, "%d/%m/%Y %h:%M")
+            delta = timedelta(minutes = intervalo)
+            x = data_inicio
+            while x <= data_fim:
+                # insira um horário
+                Service.horario_inserir(x, False, None, None, id_profissional)
+    
+                # vá para o próximo horario
+                x = x + delta
+
 
     @staticmethod
     def atendimento_inserir(data, queixa_principal, historico_saude, avaliacao, prescricao, id_horario):
@@ -118,3 +132,5 @@ class Service:
     @staticmethod
     def endereco_excluir(id):
         EnderecoDAO().excluir(id)
+
+    
