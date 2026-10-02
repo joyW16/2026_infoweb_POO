@@ -1,6 +1,7 @@
 from templates.manter_cliente_ui import ManterClienteUI
 from templates.manter_servico_ui import ManterServicoUI
 from templates.manter_horario_ui import ManterHorarioUI
+from templates.manter_profissional_ui import ManterProfissionalUI
 from templates.manter_atendimento_ui import ManterAtendimentoUI
 from templates.abrir_conta_ui import AbrirContaUI
 from templates.login_ui import LoginUI
