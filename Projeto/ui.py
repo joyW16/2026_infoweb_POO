@@ -81,4 +81,26 @@ class UI:
     #Serviços
     @staticmethod
     def servico_inserir():
-        desc = input("Informe a descrição do serviço: ")
+        descricao = input("Informe a descrição do serviço: ")
+        valor = float(input("Informe o valor", ))
+        Service.servico_inserir(descricao, valor)
+
+    @staticmethod
+    def servico_listar():
+        for obj in Service.servico_listar(): print(obj)
+
+    @staticmethod
+    def servico_atualizar():
+        for obj in Service().servico_listar(): print(obj)
+        id = int(input("Informeo o id do serviço a ser atualizado: "))
+        descricao = input("Informe a nova descrição: ")
+        valor = float(input("Informe o novo valor: "))
+        Service.servico_atualizar(id, descricao, valor)
+
+    @staticmethod
+    def servico_excluir():
+        for obj in Service().servico_listar(): print(obj)
+        id = int(input("Informe o id do servico a ser excluído: "))
+        Service.servico_excluir(id)
+
+UI.main()
