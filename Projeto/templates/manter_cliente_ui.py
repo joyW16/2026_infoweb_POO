@@ -23,9 +23,13 @@ class ManterClienteUI:
         nome = st.text_input("Informe o nome")
         email = st.text_input("Informe o e-mail")
         fone = st.text_input("Informe o fone")
+        senha = st.text_input("Informe a senha", type = "password")
         if st.button("Inserir"):
-            Service.cliente_inserir(nome, email, fone)
-            st.success("Cliente inserido com sucesso")
+            try:
+                Service.cliente_inserir(nome, email, fone, senha)
+                st.success("Cliente inserido com sucesso")
+            except ValueError as erro:
+                st.error(erro)
             time.sleep(2)
             st.rerun()
     def atualizar():
@@ -49,8 +53,11 @@ class ManterClienteUI:
         else:
             op = st.selectbox("Exclusão de Clientes", clientes)
             if st.button("Excluir"):
-                id = op.get_id()
-                Service.cliente_excluir(id)
-                st.success("Cliente excluído com sucesso")
+                try:
+                    id = op.get_id()
+                    Service.cliente_excluir(id)
+                    st.success("Cliente excluído com sucesso")
+                except ValueError as erro:
+                    st.error(erro)
                 time.sleep(2)
                 st.rerum()

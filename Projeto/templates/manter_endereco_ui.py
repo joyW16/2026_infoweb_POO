@@ -24,8 +24,11 @@ class ManterEnderecoUI:
         endereco = st.text_input("Informe o endereço")
         id_cliente = st.text_input("Informe o id_cliente")
         if st.button("Inserir"):
-            Service.endereco_inserir(nome, endereco, id_cliente)
-            st.success("Endereço inserido com sucesso")
+            try:
+                Service.endereco_inserir(nome, endereco, id_cliente)
+                st.success("Endereço inserido com sucesso")
+            except ValueError as erro:
+                st.error(erro)
             time.sleep(2)
             st.rerun()
     def atualizar():
