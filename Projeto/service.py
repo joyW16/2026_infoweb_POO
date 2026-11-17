@@ -1,20 +1,28 @@
 from models.cliente import Cliente
-from models.clientedao import ClienteDAO
+from dao_json.clientedao import ClienteDAO
 from models.servico import Servico
-from models.servicodao import ServicoDAO
+from dao_json.servicodao import ServicoDAO
 from models.horario import Horario
-from models.horariodao import HorarioDAO
+from dao_json.horariodao import HorarioDAO
 from models.atendimento import Atendimento
-from models.atendimentodao import AtendimentoDAO
+from dao_json.atendimentodao import AtendimentoDAO
 from models.endereco import Endereco
-from models.enderecodao import EnderecoDAO
+from dao_json.enderecodao import EnderecoDAO
 from models.profissional import Profissional
-from models.profissionaldao import ProfissionalDAO
+from dao_json.profissionaldao import ProfissionalDAO
 from datetime import datetime, timedelta
 
 class Service:
     @staticmethod
     def cliente_inserir(nome, email, fone, senha):
+        if email.strip().lower() == "admin":
+           raise ValueError("O e-mail 'admin' é reservado ao administrador")
+        for c in Service.cliente_listar():
+           if c.get_email().lower() == email.strip().lower():
+               raise ValueError("Esse e-mail já está cadastrado para outro cliente")
+        for r in Service.profissional_listar():
+            if r.get_email().lower() == email.strip().lower():
+                raise ValueError("Esse e-mail já está cadastrado para um profissional")
         obj = Cliente(0, nome, email, fone, senha)
         ClienteDAO().inserir(obj)
 
@@ -50,8 +58,11 @@ class Service:
 
     @staticmethod
     def servico_inserir(descricao, valor):
-        obj = Servico(0, descricao, valor)
-        ServicoDAO().inserir(obj)
+       for obj in Service.servico_listar():
+           if obj.get_descricao() == descricao:
+              raise ValueError("Serviço já cadastrado") 
+       c = Servico(0, descricao, valor)
+       ServicoDAO().inserir(c)
 
     @staticmethod
     def servico_listar():
@@ -63,9 +74,9 @@ class Service:
     
     @staticmethod
     def servico_atualizar(id, descricao, valor):
-        obj = Servico(id, descricao, valor)
-        ServicoDAO().atualizar(obj)
-
+        for obj in Service.servico_listar():
+            if obj.get_id() != id and obj.get_descricao() == descricao:
+                raise ValueError("Descrição já cadastrada em outro serviço")
     @staticmethod
     def servico_excluir(id):
         ServicoDAO().excluir(id)
@@ -83,7 +94,7 @@ class Service:
     @staticmethod
     def horario_listar():
         r = HorarioDAO().listar()
-        r.sort(key = lambda obj: obj.get_data())
+        r.sort(key=lambda obj: obj.get_data())
         return r
     
     @staticmethod
@@ -108,17 +119,30 @@ class Service:
         r = []
         agora = datetime.now()
         for h in Service.horario_listar():
-            if h.get_id() >= agora and h.get_confirmado() == False \
+            if h.get_data() >= agora and h.get_confirmado() == False \
             and h.get_id_cliente() == None and h.get_id_profissional() == id_profissional:
                 r.append(h)
-        r.sort (key = lambda h : h.get_data())
+        r.sort (key=lambda h : h.get_data())
         return r
 
     @staticmethod
+    def horario_listar_semana():
+        h = []
+        hoje = datetime.now().date
+        setedias= timedelta(days=7)
+        x = hoje + setedias
+        for r in Service.horario_listar():
+            if r.get_data().date() >= hoje and r.get_data().date() <= x:
+                h.append(r)
+        h.sort (key=lambda r: r.get_data())
+        return h
+
+   
+    @staticmethod
     def horario_abrir_agenda(data, hora_inicio, hora_fim, intervalo, id_profissional):
-            data_inicio = datetime.strptime(data + " " + hora_inicio, "%d/%m/%Y : %h:%M")
-            data_fim = datetime.strptime(data + " " + hora_fim, "%d/%m/%Y %h:%M")
-            delta = timedelta(minutes = intervalo)
+            data_inicio = datetime.strptime(data + " " + hora_inicio, "%d/%m/%Y : %H:%M")
+            data_fim = datetime.strptime(data + " " + hora_fim, "%d/%m/%Y %H:%M")
+            delta = timedelta(minutes=intervalo)
             x = data_inicio
             while x <= data_fim:
                 # insira um horário
@@ -140,7 +164,7 @@ class Service:
         r = []
         for h in Service.horario_listar():
             if h.get_confirmado() == False \
-            and h.get_id_cliente() != None and h.get_id_profissional == id_profissional:
+            and h.get_id_cliente() != None and h.get_id_profissional() == id_profissional:
                 r.append(h)
         r.sort (key = lambda h : h.get_data())
         return r

@@ -1,25 +1,25 @@
 class Profissional:
-    def __init__(self, id, nome, email, senha, especialidade):
+    def __init__(self, id, nome, email, especialidade, senha):
         self.set_id(id)
         self.set_nome(nome)
         self.set_email(email)
-        self.set_senha(senha)
         self.set_especialidade(especialidade)
+        self.set_senha(senha)
 
     def set_id(self, id):
         if id < 0: raise ValueError("Id deve ser postivo")
         self.__id = id
     def set_nome(self, nome):
-        if nome == "": raise ValueError("Nome deve ser informado")
+        if nome is None or nome.strip(): raise ValueError("Nome deve ser informado")
         self.__nome = nome
     def set_email(self, email):
-        if email == "": raise ValueError("E-mail deve ser informado")
+        if email is None or email.strip(): raise ValueError("E-mail deve ser informado")
         self.__email = email
     def set_senha(self, senha):
-        if senha == "": raise ValueError("Senha deve ser informado")
+        if senha is None or senha.strip(): raise ValueError("Senha deve ser informado")
         self.__senha = senha
     def set_especialidade(self, especialidade):
-        if especialidade == "": raise ValueError("A especialidade deve ser informado")
+        if especialidade is None or especialidade.strip(): raise ValueError("A especialidade deve ser informado")
         self.__especialidade = especialidade
 
     def get_id(self): return self.__id
