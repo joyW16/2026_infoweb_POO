@@ -77,9 +77,15 @@ class Service:
         for obj in Service.servico_listar():
             if obj.get_id() != id and obj.get_descricao() == descricao:
                 raise ValueError("Descrição já cadastrada em outro serviço")
+        c = Service(id, descricao, valor)
+        ServicoDAO().atualizar(c)
     @staticmethod
     def servico_excluir(id):
-        ServicoDAO().excluir(id)
+        for obj in Service.horario_listar():
+            if obj.get_id_servico() == id:
+                raise ValueError("Não é possível excluir, pois esse serviço já agendado")
+        c = Servico(id, "sem descrição", 0)
+        ServicoDAO().excluir(c)
 
 
     @staticmethod
