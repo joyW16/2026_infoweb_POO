@@ -1,21 +1,24 @@
-from templates.manter_cliente_ui import ManterClienteUI
-from templates.manter_servico_ui import ManterServicoUI
-from templates.manter_horario_ui import ManterHorarioUI
-from templates.manter_profissional_ui import ManterProfissionalUI
-from templates.manter_atendimento_ui import ManterAtendimentoUI
-from templates.abrir_conta_ui import AbrirContaUI
-from templates.login_ui import LoginUI
-from templates.perfil_cliente_ui import PerfilClienteUI
-from templates.perfil_profissional_ui import PerfilProfissionalUI
-from templates.perfil_admin_ui import PerfilAdminUI
-from templates.agendar_servico_ui import AgendarServicoUI
-from templates.abrir_minha_agenda_ui import AbrirMinhaAgendaUI
-from templates.visualizar_meus_servicos_ui import VisualizarMeusServicosUI
-from Projeto.templates.visualizar_minha_agenda_ui import VisualizarMinhaAgendaUI
-from templates.confirmar_servico_ui import ConfirmarServicoUI
-from templates.manter_endereco_ui import ManterEnderecoUI
+from templates.manterclienteui import ManterClienteUI
+from templates.manterservicoui import ManterServicoUI
+from templates.manterhorarioui import ManterHorarioUI
+from templates.manterprofissionalui import ManterProfissionalUI
+from templates.manteratendimentoui import ManterAtendimentoUI
+from templates.abrircontaui import AbrirContaUI
+from templates.loginui import LoginUI
+from templates.perfiladminui import PerfilAdminUI
+from templates.perfilclienteui import PerfilClienteUI
+from templates.perfilprofissionalui import PerfilProfissionalUI
+from templates.agendarservicoui import AgendarServicoUI
+from templates.abrirminhaagendaui import AbrirMinhaAgendaUI
+from templates.visualizarmeusservicosui import VisualizarMeusServicosUI
+from templates.visualizarminhaagendaui import VisualizarMinhaAgendaUI
+from templates.confirmarservicoui import ConfirmarServicoUI
+from templates.mostraragendasemanaui import MostrarAgendaSemanaUI
+from Projeto.templates.listarservicosagendadosui import ListarServicosAgendadosUI
 from service import Service
 import streamlit as st
+
+
 
 class IndexUI:
 
@@ -39,7 +42,7 @@ class IndexUI:
         if op == "Confirmar Serviço": ConfirmarServicoUI.main()
         
     def menu_admin():
-        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Clientes", "Serviços", "Horários", "Profissionais", "Atendimentos", "Endereços"])
+        op = st.sidebar.selectbox("Menu", ["Meus Dados", "Clientes", "Serviços", "Horários", "Profissionais", "Atendimentos", "Endereços", "Agenda da Semana", "Lista de Serviços Agendados"])
         if op == "Meus Dados": PerfilAdminUI.main()
         if op == "Clientes": ManterClienteUI.main()
         if op == "Serviços": ManterServicoUI.main()
@@ -47,6 +50,8 @@ class IndexUI:
         if op == "Profissionais": ManterProfissionalUI.main()
         if op == "Atendimentos": ManterAtendimentoUI.main()
         if op == "Endereços" : ManterEnderecoUI.main()
+        if op == "Agenda da Semana" : MostrarAgendaSemanaUI.main()
+        if op == "Lista de Serviços Agendados": ListarServicosAgendadosUI.main()
 
     def sair_do_sistema():
         if st.sidebar.button("Sair"):
