@@ -16,7 +16,9 @@ class Service:
     @staticmethod
     def cliente_inserir(nome, email, fone, senha):
         if email.strip().lower() == "admin":
-           raise ValueError("O e-mail 'admin' é reservado ao administrador")
+           for c in Service.cliente_listar():
+               if c.get_email() == 'admin':
+                raise ValueError("O e-mail 'admin' é reservado ao administrador")
         for c in Service.cliente_listar():
            if c.get_email().lower() == email.strip().lower():
                raise ValueError("Esse e-mail já está cadastrado para outro cliente")
@@ -46,8 +48,10 @@ class Service:
     @staticmethod
     def cliente_criar_admin():
         for c in Service.cliente_listar():
-            if c.get_email() == "admin": return
-        Service.cliente_inserir("admin", "admin", "fone", "1234")        
+            if c.get_email() == "admin":
+                return
+        c = Cliente(0, "admin", "admin", "fone", "1234")        
+        ClienteDAO().inserir(c)
 
     @staticmethod
     def cliente_autenticar(email, senha):

@@ -3,6 +3,7 @@ from templates.manterservicoui import ManterServicoUI
 from templates.manterhorarioui import ManterHorarioUI
 from templates.manterprofissionalui import ManterProfissionalUI
 from templates.manteratendimentoui import ManterAtendimentoUI
+from templates.manter_endereco_ui import ManterEnderecoUI
 from templates.abrircontaui import AbrirContaUI
 from templates.loginui import LoginUI
 from templates.perfiladminui import PerfilAdminUI
@@ -14,7 +15,7 @@ from templates.visualizarmeusservicosui import VisualizarMeusServicosUI
 from templates.visualizarminhaagendaui import VisualizarMinhaAgendaUI
 from templates.confirmarservicoui import ConfirmarServicoUI
 from templates.mostraragendasemanaui import MostrarAgendaSemanaUI
-from Projeto.templates.listarservicosagendadosui import ListarServicosAgendadosUI
+from templates.listarservicosagendadosui import ListarServicosAgendadosUI
 from service import Service
 import streamlit as st
 
@@ -76,5 +77,4 @@ class IndexUI:
         Service.cliente_criar_admin()
         # monta o sidebar
         IndexUI.sidebar()
-
 IndexUI.main()
