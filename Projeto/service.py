@@ -1,5 +1,5 @@
 from models.cliente import Cliente
-from dao_json.clientedao import ClienteDAO
+from Projeto.dao_sql.clientedao import ClienteDAO
 from models.servico import Servico
 from dao_json.servicodao import ServicoDAO
 from models.horario import Horario
