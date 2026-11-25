@@ -42,9 +42,12 @@ class ManterClienteUI:
             fone = st.text_input("Novo fone", op.get_fone())
             senha = st.text_input("Nova senha", op.get_senha(), type="password")
             if st.button("Atualizar"):
-                id = op.get_id()
-                Service.cliente_atualizar(id, nome, email, fone, senha)
-                st.success("Cliente atualizado com sucesso")
+                try:
+                    id = op.get_id()
+                    Service.cliente_atualizar(id, nome, email, fone, senha)
+                    st.success("Cliente atualizado com sucesso")
+                except ValueError as erro:
+                    st.error(erro)
                 time.sleep(2)
                 st.rerun()
     def excluir():
